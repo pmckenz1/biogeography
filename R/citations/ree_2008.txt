@@ -1,0 +1,10 @@
+@article{ree2008maximum,
+  title={Maximum likelihood inference of geographic range evolution by dispersal, local extinction, and cladogenesis},
+  author={Ree, Richard H and Smith, Stephen A},
+  journal={Systematic Biology},
+  volume={57},
+  number={1},
+  pages={4--14},
+  year={2008},
+  publisher={Oxford University Press}
+}
