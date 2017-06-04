@@ -1,4 +1,4 @@
-get_land_matrix <- function(nrows,ncols, lats, lons) {
+get_land_matrix <- function(nrow,ncol, lats, lons) {
   # function requires htmltab package
   lons <- seq(lons[1],lons[2],length.out = ncol)
   lats <- seq(lats[1],lats[2],length.out = nrow)
@@ -12,4 +12,5 @@ get_land_matrix <- function(nrows,ncols, lats, lons) {
       print(paste0("col = ",i,", row = ",q))
     }
   }
+  lat_lon_mat
 }
