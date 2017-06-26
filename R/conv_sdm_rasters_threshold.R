@@ -1,5 +1,6 @@
 #' Convert maxent output rasters to binary by threshold values
 #' @param raster_path path to the .asc file
+#' @param results_file path to the results file
 #' @param threshold either "balanced", "10pct", or "minimum"
 
 conv_sdm_rasters_threshold <- function(raster_path,results_file,threshold) {
