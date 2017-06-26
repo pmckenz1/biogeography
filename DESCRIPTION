@@ -1,9 +1,16 @@
 Package: matrixranger
-Title: What the Package Does (one line, title case)
+Title: Reconstructing ancestral ranges using a phylogeny and two data matrices
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: as.person(c(
+    “Patrick McKenzie <p.mckenzie@columbia.edu> [aut, cre]", 
+    “Rachel Swenie <rswenie@utk.edu> [aut]”,
+    “Brian O’Meara <bomeara@utk.edu> [aut]”
+  ))
+Description: Produces raster images of ancestral species ranges at nodes on a phylogeny from raster images of extant species ranges and environmental rasters.
 Depends: R (>= 3.3.2)
-License: What license is it under?
+Imports:
+    raster,
+    rgbif
+License: CC0
 Encoding: UTF-8
 LazyData: true
