@@ -8,9 +8,9 @@
 library(raster)
 library(rgbif)
 
-sdm_function <- function(directory.path,coords,species.name,climate.map.path = NA,threshold = "balanced") {
+sdm_function <- function(directory.path,coords = NULL,species.name,climate.map.path = NULL,threshold = "balanced") {
 print("Getting climate data...")
-if (is.na(climate.map.path)) {
+if (is.null(climate.map.path)) {
 climate_data <- getData("worldclim", var="bio", res=2.5,path = directory.path)
 } else {
   rasterlist <- list()
@@ -25,6 +25,11 @@ names(climate_data) <- c("Annual Mean Temp", "Mean Diurnal Range", "Isothermalit
                            "Precip Wettest Month", "Precip Driest Month", "Precip Seasonality", "Precip Wettest Quarter", 
                            "Precip Driest Quarter", "Precip Warmest Quarter", "Precip Coldest Quarter")
 print("......Finished")
+
+if (is.null(coords)) {
+  coords <- c(-180,180,-90,90)
+}
+
 ext<-extent(coords) 
 clim_map_US <- crop(climate_data,ext)
 print("Getting occurrence data...")
