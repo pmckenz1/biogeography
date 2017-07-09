@@ -1,0 +1,83 @@
+#NEXUS
+
+[!This data set was downloaded from TreeBASE, a relational database of phylogenetic knowledge. TreeBASE has been supported by the NSF, Harvard University, Yale University, SDSC and UC Davis. Please do not remove this acknowledgment from the Nexus file.
+
+
+Generated on June 29, 2017; 14:55 GMT
+
+TreeBASE (cc) 1994-2008
+
+Study reference:
+Roncal J., Kahn F., Millan B., Couvreur T.L., & Pintaud J. 2012. Cenozoic colonization
+and diversification patterns of tropical American palms: evidence from Astrocaryum
+(Arecaceae). Botanical Journal of the Linnean Society, .
+
+TreeBASE Study URI:  http://purl.org/phylo/treebase/phylows/study/TB2:S12088]
+
+BEGIN TAXA;
+        TITLE  Taxa;
+        DIMENSIONS NTAX=52;
+        TAXLABELS
+            Acrocomia_aculeata
+            Acrocomia_crispa
+            Aiphanes_horrida
+            Aiphanes_minima
+            Allagoptera_caudescens
+            Astrocaryum_acaule
+            Astrocaryum_aculeatum
+            Astrocaryum_campestre
+            Astrocaryum_carnosum
+            Astrocaryum_chambira
+            Astrocaryum_chonta
+            Astrocaryum_faranae
+            Astrocaryum_farinosum
+            Astrocaryum_ferrugineum
+            Astrocaryum_gratum
+            Astrocaryum_gynacanthum
+            Astrocaryum_huaimi
+            Astrocaryum_huicungo
+            Astrocaryum_jauari
+            Astrocaryum_javarense
+            Astrocaryum_macrocalyx
+            Astrocaryum_malybo
+            Astrocaryum_minus
+            Astrocaryum_murumuru
+            Astrocaryum_paramaca
+            Astrocaryum_perangustatum
+            Astrocaryum_rodriguesii
+            Astrocaryum_sciophilum
+            Astrocaryum_scopatum
+            Astrocaryum_sociale
+            Astrocaryum_standleyanum
+            Astrocaryum_ulei
+            Astrocaryum_urostachys
+            Astrocaryum_vulgare
+            Attalea_phalerata
+            Bactris_bifida
+            Bactris_gasipaes
+            Barcella_odora
+            Beccariophoenix_madagascariensis
+            Butia_eriospatha
+            Cocos_nucifera
+            Desmoncus_orthacanthos
+            Desmoncus_polyacanthos
+            Elaeis_oleifera
+            Hexopetion_alatum
+            Hexopetion_mexicanum
+            Jubaea_chilensis
+            Jubaeopsis_caffra
+            Lytocaryum_weddellianum
+            Parajubaea_cocoides
+            Reinhardtia_simplex
+            Voanioala_gerardii
+            ;
+END;
+
+BEGIN TREES;
+      TITLE Astrocaryum_Bayesian_analysis_with_post_prob;
+      LINK TAXA = Taxa;
+      TREE con_50_majrule = [&R] (Reinhardtia_simplex:0.793387,(((((((Astrocaryum_acaule:0.0708,(Astrocaryum_huaimi:0.089079,Astrocaryum_jauari:0.09343)1.00:0.028108)1.00:0.040437,((Astrocaryum_aculeatum:0.066305,Astrocaryum_campestre:0.050811,((((((Astrocaryum_carnosum:0.023691,Astrocaryum_perangustatum:0.028267)0.90:0.011283,((Astrocaryum_chonta:0.017038,Astrocaryum_scopatum:0.00971)0.99:0.018525,Astrocaryum_ulei:0.023388)0.91:0.011185,((Astrocaryum_faranae:0.016878,Astrocaryum_javarense:0.032677)0.93:0.010931,(Astrocaryum_gratum:0.01698,Astrocaryum_murumuru:0.079112)0.99:0.016943)1.00:0.016698,Astrocaryum_ferrugineum:0.016835,Astrocaryum_huicungo:0.011467)0.66:0.011061,(Astrocaryum_macrocalyx:0.010998,Astrocaryum_urostachys:0.016826)1.00:0.035008)1.00:0.040859,(Astrocaryum_standleyanum:0.0694,Astrocaryum_vulgare:0.083572)1.00:0.028169)0.90:0.011074,Astrocaryum_malybo:0.062626)0.55:0.009636,(((Astrocaryum_farinosum:0.016942,Astrocaryum_sociale:0.010939)0.99:0.016632,Astrocaryum_sciophilum:0.034096)1.00:0.067374,(Astrocaryum_gynacanthum:0.066864,(Astrocaryum_minus:0.019155,(Astrocaryum_paramaca:0.029665,Astrocaryum_rodriguesii:0.017257)1.00:0.065515)0.64:0.026487)1.00:0.060456)0.99:0.018467)0.75:0.01283)1.00:0.023307,Astrocaryum_chambira:0.055735)1.00:0.038342)1.00:0.089742,(Hexopetion_alatum:0.055985,Hexopetion_mexicanum:0.041213)1.00:0.120779)0.84:0.017836,(Bactris_bifida:0.236124,Bactris_gasipaes:0.24466)1.00:0.212133)1.00:0.061779,(Aiphanes_minima:0.119106,Aiphanes_horrida:0.053143)1.00:0.394164)1.00:0.055174,((Acrocomia_aculeata:0.18477,Acrocomia_crispa:0.167119)1.00:0.080548,(Desmoncus_polyacanthos:0.1005,Desmoncus_orthacanthos:0.064893)1.00:0.357958)1.00:0.045987)1.00:0.203981,(Barcella_odora:0.157604,Elaeis_oleifera:0.199276)1.00:0.246322)1.00:0.248208,((((((Allagoptera_caudescens:0.272154,Parajubaea_cocoides:0.117337)0.85:0.042083,Lytocaryum_weddellianum:0.291856)0.94:0.104486,Cocos_nucifera:0.368816)0.75:0.028343,(Attalea_phalerata:0.311574,(Butia_eriospatha:0.069385,Jubaea_chilensis:0.084813)1.00:0.158694)0.88:0.039729)1.00:0.116288,(Beccariophoenix_madagascariensis:0.210522,Voanioala_gerardii:0.190051)1.00:0.038663)1.00:0.075122,Jubaeopsis_caffra:0.801612)0.97:0.058837);
+[!  TreeBASE tree URI: http://purl.org/phylo/treebase/phylows/tree/TB2:Tr49478]
+
+
+END;

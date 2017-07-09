@@ -1,0 +1,73 @@
+#NEXUS
+
+
+BEGIN TAXA;
+	TITLE Taxa;
+	DIMENSIONS NTAX=52;
+	TAXLABELS
+		'Acrocomia_aculeata' 'Acrocomia_crispa' 'Aiphanes_horrida' 'Aiphanes_minima' 'Allagoptera_caudescens' 'Astrocaryum_acaule' 'Astrocaryum_aculeatum' 'Hexopetion_alatum' 'Astrocaryum_campestre' 'Astrocaryum_carnosum' 'Astrocaryum_chambira' 'Astrocaryum_chonta' 'Astrocaryum_faranae' 'Astrocaryum_farinosum' 'Astrocaryum_ferrugineum' 'Astrocaryum_gratum' 'Astrocaryum_gynacanthum' 'Astrocaryum_huaimi' 'Astrocaryum_huicungo' 'Astrocaryum_jauari' 'Astrocaryum_javarense' 'Astrocaryum_macrocalyx' 'Astrocaryum_malybo' 'Hexopetion_mexicanum' 'Astrocaryum_minus' 'Astrocaryum_murumuru' 'Astrocaryum_paramaca' 'Astrocaryum_perangustatum' 'Astrocaryum_rodriguesii' 'Astrocaryum_sciophilum' 'Astrocaryum_scopatum' 'Astrocaryum_sociale' 'Astrocaryum_standleyanum' 'Astrocaryum_ulei' 'Astrocaryum_urostachys' 'Astrocaryum_vulgare' 'Attalea_phalerata' 'Bactris_bifida' 'Bactris_gasipaes' 'Barcella_odora' 'Beccariophoenix_madagascariensis' 'Butia_eriospatha' 'Cocos_nucifera' 'Desmoncus_orthacanthos' 'Desmoncus_polyacanthos' 'Elaeis_oleifera' 'Jubaea_chilensis' 'Jubaeopsis_caffra' 'Lytocaryum_weddellianum' 'Parajubaea_cocoides' 'Reinhardtia_simplex' 'Voanioala_gerardii' 
+	;
+END;
+
+
+begin TREES;
+
+	TRANSLATE
+		1 'Acrocomia_aculeata',
+		2 'Acrocomia_crispa',
+		3 'Aiphanes_horrida',
+		4 'Aiphanes_minima',
+		5 'Allagoptera_caudescens',
+		6 'Astrocaryum_acaule',
+		7 'Astrocaryum_aculeatum',
+		8 'Hexopetion_alatum',
+		9 'Astrocaryum_campestre',
+		10 'Astrocaryum_carnosum',
+		11 'Astrocaryum_chambira',
+		12 'Astrocaryum_chonta',
+		13 'Astrocaryum_faranae',
+		14 'Astrocaryum_farinosum',
+		15 'Astrocaryum_ferrugineum',
+		16 'Astrocaryum_gratum',
+		17 'Astrocaryum_gynacanthum',
+		18 'Astrocaryum_huaimi',
+		19 'Astrocaryum_huicungo',
+		20 'Astrocaryum_jauari',
+		21 'Astrocaryum_javarense',
+		22 'Astrocaryum_macrocalyx',
+		23 'Astrocaryum_malybo',
+		24 'Hexopetion_mexicanum',
+		25 'Astrocaryum_minus',
+		26 'Astrocaryum_murumuru',
+		27 'Astrocaryum_paramaca',
+		28 'Astrocaryum_perangustatum',
+		29 'Astrocaryum_rodriguesii',
+		30 'Astrocaryum_sciophilum',
+		31 'Astrocaryum_scopatum',
+		32 'Astrocaryum_sociale',
+		33 'Astrocaryum_standleyanum',
+		34 'Astrocaryum_ulei',
+		35 'Astrocaryum_urostachys',
+		36 'Astrocaryum_vulgare',
+		37 'Attalea_phalerata',
+		38 'Bactris_bifida',
+		39 'Bactris_gasipaes',
+		40 'Barcella_odora',
+		41 'Beccariophoenix_madagascariensis',
+		42 'Butia_eriospatha',
+		43 'Cocos_nucifera',
+		44 'Desmoncus_orthacanthos',
+		45 'Desmoncus_polyacanthos',
+		46 'Elaeis_oleifera',
+		47 'Jubaea_chilensis',
+		48 'Jubaeopsis_caffra',
+		49 'Lytocaryum_weddellianum',
+		50 'Parajubaea_cocoides',
+		51 'Reinhardtia_simplex',
+		52 'Voanioala_gerardii';
+
+
+	TREE Astrocaryum_dated_tree_in_BEAST = (((((52:34.408625723168015,41:34.408625723168015):10.976961793877209,((43:32.017446266883404,((5:16.89061961732782,50:16.89061961732782):5.034060712383322,49:21.92468032971114):10.092765937172263):3.2891498866428535,((47:9.323713996549467,42:9.323713996549467):22.084613489766518,37:31.408327486315986):3.898268667210271):10.078991363518966):10.784060218097864,48:56.16964773514309):3.338922636765112,51:59.5085703719082):3.775059524461547,((46:20.47669468069666,40:20.47669468069666):32.507045862664405,(((3:9.67849315704184,4:9.67849315704184):30.423419092436603,((39:30.65926105131395,38:30.65926105131395):6.014909172260939,(((6:13.645491520443729,(20:9.757647915984203,18:9.757647915984203):3.887843604459526):7.199158789683272,(11:16.133116167958494,((9:9.960766391386345,7:9.960766391386345):3.6893305023698417,((23:11.416770459927205,(((22:1.477678108637781,35:1.477678108637781):4.9453910637282,(((21:2.596808242606418,13:2.596808242606418):1.4261529381353495,(26:2.9082244922377463,16:2.9082244922377463):1.114736688504021):1.3796066702218281,(((31:1.2241728090470467,12:1.2241728090470467):1.6209720964247951,34:2.845144905471842):1.5553008945195308,((15:2.3125942716714376,19:2.3125942716714376):1.2662146077160665,(10:2.6328919101538415,28:2.6328919101538415):0.9459169692336626):0.8216369206038685):1.0021220509722228):1.020501321402386):4.074802560557617,(36:7.3195182750234,33:7.3195182750234):3.178353457900198):0.9188987270036062):1.0228563080635027,(((25:4.436287957991687,17:4.436287957991687):2.1928251674794463,(29:1.9620877784828787,27:1.9620877784828787):4.667025346988255):3.9101079584132314,((14:1.4502108303141337,32:1.4502108303141337):2.146804866670532,30:3.597015696984666):6.942205386899699):1.9004056841063424):1.2104701257654789):2.4830192742023076):4.711534142168507):12.030415533082902,(24:6.916427326750804,8:6.916427326750804):25.958638516459096):3.7991043803649873):3.427742025903555):3.2695194862359998,((2:31.17874338317436,1:31.17874338317436):7.235823897512052,(45:9.456297486870383,44:9.456297486870383):28.95826979381603):4.9568644550280325):9.61230880764662):10.29988935300868);
+end;
+
+
