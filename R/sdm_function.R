@@ -7,9 +7,11 @@
 #' @param species.name the scientific name of the species to be mapped
 #' @param climate.map.path map to a global climate map. The path should be to the folder containing 19 raster layers. If NA, the map will be downloaded to directory.path.
 #' @param threshold Default is "balanced," but other options include "10pct" and "minimum"
+#' @param raster.location if environmental rasters already exist, path to folder in which they're located.
+#' @param do.plot if TRUE, it'll plot the results and output a list object
 
-
-sdm_function <- function(directory.path,coords = NULL,species.name,climate.map.path = NULL,threshold = "balanced") {
+sdm_function <- function(directory.path,coords = NULL,species.name,climate.map.path = NULL,threshold = "balanced",
+                         raster.location = NULL, do.plot = TRUE) {
 print("Getting climate data...")
 if (is.null(climate.map.path)) {
 climate_data <- getData("worldclim", var="bio", res=2.5,path = directory.path)
@@ -40,15 +42,22 @@ bluebirdlon <- bluebirds$data$decimalLongitude
 write.csv(cbind(species = bluebirds$data$name,lon = bluebirdlon,lat = bluebirdlat),paste0(directory.path,"/occurrence_data.csv"),row.names = FALSE)
 print("......Finished")
 
-layers<-c(1:19)
-print("Writing raster inputs...")
-layerpaths <- paste0(directory.path,"/bio",layers)
-writeRaster(stack(clim_map_US[[layers]]), layerpaths,
-            bylayer=TRUE, format='ascii', overwrite=T)
-print("......Finished")
+# if there is no occurrence data or if there are fewer than three unique points
+if (!is.null(bluebirds$data) && (!(nrow(unique(bluebirds$data[,c(1,3,4)])) < 3))) {
+
+if (is.null(raster.location)) {
+  layers<-c(1:19)
+  print("Writing raster inputs...")
+  layerpaths <- paste0(directory.path,"/bio",layers)
+  writeRaster(stack(clim_map_US[[layers]]), layerpaths,
+              bylayer=TRUE, format='ascii', overwrite=T)
+  print("......Finished")
+}
 
 maxent.jar.path <- "maxent.jar"
-environmental.layers.path <- directory.path
+if (!is.null(raster.location)) {
+  environmental.layers.path <- raster.location
+} else {environmental.layers.path <- directory.path}
 sample.data.path <- paste0(directory.path,"/occurrence_data.csv")
 output.path <- paste0(directory.path,"/outputs")
 dir.create(file.path(directory.path, "/outputs"))
@@ -56,21 +65,26 @@ print("Starting maxent...")
 system(paste0('java -mx512m -jar ',maxent.jar.path,' nowarnings noprefixes -E "" -E ',gsub(" ","_",species.name),' outputformat=logistic outputdirectory=',output.path,' samplesfile=',sample.data.path,' environmentallayers=',environmental.layers.path,' autorun'))
 print("......Finished")
 
-print("Reading maxent outputs...")
-maxent_output <-raster(paste0(output.path,"/",gsub(" ","_",species.name),".asc"))
-results <- read.csv(paste0(output.path,"/maxentResults.csv"))
-if (threshold == "balanced") {
-mapthreshold <- results$Balance.training.omission..predicted.area.and.threshold.value.Logistic.threshold
-} else if (threshold == "10pct") {
-  mapthreshold <- results$X10.percentile.training.presence.Logistic.threshold
-} else if (threshold == "minimum") {
-  mapthreshold <- results$Minimum.training.presence.Logistic.threshold
+if (do.plot == TRUE) {
+  print("Reading maxent outputs...")
+  maxent_output <-raster(paste0(output.path,"/",gsub(" ","_",species.name),".asc"))
+  results <- read.csv(paste0(output.path,"/maxentResults.csv"))
+  if (threshold == "balanced") {
+  mapthreshold <- results$Balance.training.omission..predicted.area.and.threshold.value.Logistic.threshold
+  } else if (threshold == "10pct") {
+    mapthreshold <- results$X10.percentile.training.presence.Logistic.threshold
+  } else if (threshold == "minimum") {
+    mapthreshold <- results$Minimum.training.presence.Logistic.threshold
+  }
+  m <- c(0,mapthreshold,0,mapthreshold,1,1)
+  rclmat <- matrix(m, ncol=3, byrow=TRUE)
+  rc <- reclassify(maxent_output, rclmat)
+  plot(crop(rc,ext))
+  print("......Finished")
+  list(raw_output = maxent_output,threshold_map = rc, maxent_results = results)
 }
-m <- c(0,mapthreshold,0,mapthreshold,1,1)
-rclmat <- matrix(m, ncol=3, byrow=TRUE)
-rc <- reclassify(maxent_output, rclmat)
-plot(crop(rc,ext))
-print("......Finished")
-list(raw_output = maxent_output,threshold_map = rc, maxent_results = results)
+
+} else {warning(paste0("No occurrence data for ",species.name))}
+
 }
 
