@@ -98,3 +98,4 @@ pruned.dated.tree$edge.length[1]<- temp
 pruned.dated.tree$edge.length[77] <- temp
 plot(pruned.dated.tree)
 pruned.dated.tree$tip.label
+
