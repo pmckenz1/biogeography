@@ -50,3 +50,5 @@ get_prob_matrix <- function(Ps, Es, alpha, beta) {
   # output
   Ps_copy
 }
+
+
