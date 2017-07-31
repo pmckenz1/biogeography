@@ -48,7 +48,7 @@ if ((sum(center > (boxsize+1)/2) == 2) && (sum(center < c((nrow(Ps) - (boxsize+1
 }
 }
 empty_filler <- sqrt(empty_filler/max(empty_filler,na.rm = TRUE))
-plot(as.raster(empty_filler))
+#plot(as.raster(empty_filler))
 
 vals <- empty_filler[!is.na(empty_filler)]
 sum(vals)
@@ -62,6 +62,17 @@ empty_filler
 
 
 ###############################
+
+library(ape)
+dated.tree <- read.nexus("/Users/pmckenz1/Desktop/projects/matrixranger/data/Astrocaryum_dated_tree_in_BEAST.nex")
+
+
+species_names <- list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0startingranges")
+species_names <- gsub(".csv","",species_names)
+
+pruned.dated.tree <- drop.tip(dated.tree,dated.tree$tip.label[!(dated.tree$tip.label %in% species_names)])
+pruned.dated.tree$edge.length <- (pruned.dated.tree$edge.length * (99 / (max(pruned.dated.tree$edge.length) - min(pruned.dated.tree$edge.length))))
+pruned.dated.tree$edge.length <- pruned.dated.tree$edge.length - min(pruned.dated.tree$edge.length) + 1
 
 ntips <- length(pruned.dated.tree$tip.label)
 
@@ -87,7 +98,8 @@ startingfiles <- paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/
 
 enviro_matrix <- as.matrix(read.csv("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0enviro_matrix.csv"))
 
-for (p in 37:38) {
+#running movement up branches
+for (p in 1:length(tips.labels)) {
   first.branch.starting <- as.matrix(read.csv(startingfiles[p]))
   first.branch.starting <- box_movement_method(Ps = first.branch.starting, Es = enviro_matrix, branch_length = edgelength.tips[p], sample_multiplier = 10000)
   write.csv(first.branch.starting,
@@ -96,9 +108,79 @@ for (p in 37:38) {
   print(p)
 }
 
-test1 <- as.matrix(read.csv("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0nodemaps/79_23.csv"))
-test2 <- as.matrix(read.csv("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0nodemaps/79_24.csv"))
+# saving new nodes!
+for (p in 1:length(unique(edge.from.to.tips[,1]))) {
+  if (sum(edge.from.to.tips[,1] == unique(edge.from.to.tips[,1])[p]) == 2) {
+    internal.node.num <- unique(edge.from.to.tips[,1])[p]
+    tip_nums <- edge.from.to.tips[,2][(edge.from.to.tips[,1] == internal.node.num)]
+    filenames <- paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0nodemaps/",internal.node.num,"_",tip_nums,".csv")
+    first <- as.matrix(read.csv(filenames[1]))
+    second <- as.matrix(read.csv(filenames[2]))
+    node <- sqrt(first*second)
+    write.csv(node,paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes/",internal.node.num,".csv"),row.names = FALSE)
+    print(p)
+  }
+}
 
-plot(as.raster(test1))
-plot(as.raster(test2))
-plot(as.raster(sqrt(test1*test2)/max(sqrt(test1*test2),na.rm = T)))
+for (p in list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes")) {
+  plot(as.raster(as.matrix(read.csv(paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes/",p)))))
+}
+
+# ONE TIME ONLY get the starting ranges in the nodes folder as well, saved with numbers
+for (p in list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0startingranges")) {
+  node <- as.matrix(read.csv(paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0startingranges/",p)))
+  species <- gsub(".csv","",p)
+  nodenumber <- tip.numbers[(tip.numbers[,1] == species),2]
+  write.csv(node,
+            paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes/",nodenumber,".csv"),
+            row.names = FALSE)
+}
+
+
+while(length(list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes")) < (length(pruned.dated.tree$edge.length) + 1)) {
+
+# figure out which new nodes are new and need movement to be run
+eligible_branches <- pruned.dated.tree$edge[(pruned.dated.tree$edge[,2] %in% as.numeric(gsub(".csv","",list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes")))),]
+
+torun_branches <- eligible_branches[!(paste0(eligible_branches[,1],"_",eligible_branches[,2]) %in% gsub(".csv","",list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0nodemaps"))),]
+
+#save the new info all together
+if (!is.null(nrow(torun_branches))) {
+  torun_branch_info <- cbind(torun_branches,pruned.dated.tree$edge.length[(pruned.dated.tree$edge[,2] %in% torun_branches[,2])])
+} else {
+  torun_branch_info <- c(torun_branches,pruned.dated.tree$edge.length[(pruned.dated.tree$edge[,2] %in% torun_branches[2])])
+  dim(torun_branch_info) <- c(1,3)
+  }
+#run movement
+for (p in 1:nrow(torun_branch_info)) {
+  nodenumber <- torun_branch_info[p,2]
+  first.branch.starting <- as.matrix(read.csv(paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes/",nodenumber,".csv")))
+  first.branch.starting <- box_movement_method(Ps = first.branch.starting, Es = enviro_matrix, branch_length = torun_branch_info[p,3], sample_multiplier = 10000)
+  write.csv(first.branch.starting,
+            paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0nodemaps/",paste0(torun_branch_info[p,1]),"_",paste0(torun_branch_info[p,2]),".csv"),
+            row.names = FALSE)
+  print(p)
+}
+
+done_branches <- matrix(unlist(strsplit(gsub(".csv","",list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0nodemaps/")),"_")),
+       ncol = 2,
+       byrow = TRUE)
+
+for (p in 1:length(unique(done_branches[,1]))) {
+  if (sum(done_branches[,1] == unique(done_branches[,1])[p]) == 2) {
+    prospect <- unique(done_branches[,1])[p]
+    if (!(prospect %in% gsub(".csv","",list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes/")))) {
+      files <- done_branches[(done_branches[,1] == prospect),]
+      filenames <- paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0nodemaps/",prospect,"_",files[,2],".csv")
+      first <- as.matrix(read.csv(filenames[1]))
+      second <- as.matrix(read.csv(filenames[1]))
+      node <- sqrt(first*second)
+      write.csv(node,paste0("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes/",prospect,".csv"),row.names = FALSE)
+      print(p)
+    }
+  }
+}
+
+}
+
+gsub(".csv","",list.files("/Users/pmckenz1/Desktop/projects/astrocaryum_proj_data/0internal_nodes/"))
